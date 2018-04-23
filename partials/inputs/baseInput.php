@@ -1,5 +1,5 @@
 <?php 
-
+//namespace SMEE\fields\input;
 class input extends field{
     const INFINITE_SIZE = -1;
     protected $type;
