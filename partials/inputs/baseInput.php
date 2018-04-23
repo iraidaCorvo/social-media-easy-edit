@@ -19,6 +19,20 @@ class input extends field{
                 parent::__set($name,$value);
         endswitch;
     }
+    function sanitize($value){
+        if( 
+            $this->INFINITE_SIZE != $this->minLength and 
+            strlen($value) < $this->minLength 
+        ) throw new min_length('Field too small.');
+        return parent::sanitize($value);
+    }
+
+
+    function __toString(){
+        $attrs = $this->serialize_attrs();
+        return "<input $attrs>";
+    }
+
 
 }
 
