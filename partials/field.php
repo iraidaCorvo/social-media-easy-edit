@@ -1,4 +1,5 @@
 <?php
+//namespace \partials\field;
 class field{
     protected $props = [
         'value'    => '',
@@ -6,9 +7,16 @@ class field{
         'name'     => '',
         'id'       => ''
     ];
+     // function __autoload($classname) {
+    //     $filename = "./". $classname .".php";
+    //     include_once($filename);
+    // }
     
     function __construct($name = 'name', $id = '', $class = '', $value = ''){
-      
+       // if( empty($id) ) $id = rand();
+        // foreach( $this->props as $prop => $value ) $this->props[$prop] = $$prop;
+
+        
     }
 
     function __get($name){
