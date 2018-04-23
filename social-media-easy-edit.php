@@ -6,3 +6,12 @@
 * Author: Iraida Artiles Corvo
 * License: GPL2
 **/
+use \partials\field as field;
+
+function testing(){
+    //include_once __DIR__ . '/partials/field.php';
+    $miInput = new field();
+   // exit;
+    //echo $miInput;
+}
+
