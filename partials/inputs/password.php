@@ -5,13 +5,12 @@ class input_password extends input{
         parent::__construct($name, $id, $class, $value, 'password');
     }
 
-    // function __set($name, $value){
-    //     switch( $name ):
-
-    //         default: 
-    //             parent::__set($name,$value);
-    //     endswitch;
-    // }
+    function __set($name, $value){
+        switch( $name ):
+            default: 
+               parent::__set($name,$value);
+         endswitch;
+    }
 
 }
 
