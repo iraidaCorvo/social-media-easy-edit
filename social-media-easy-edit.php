@@ -6,15 +6,26 @@
 * Author: Iraida Artiles Corvo
 * License: GPL2
 **/
-use \partials\field as field;
+//use \partials\field as field;
 
+//namespace partials\input;
+//echo __NAMESPACE__;
+define( 'SMEE_PATH', plugin_dir_path(__FILE__));
+define( 'SMEE_PARTIALS_PATH', SMEE_PATH . 'partials/');
+
+include_once 'form.php';
 function testing(){
-    //include_once __DIR__ . '/partials/field.php';
-    $miInput = new field();
-   // exit;
-    //echo $miInput;
+    $miForm = new forms();
+    $miForm->add_textbox('text1', 'text1-id');
+    $miForm->add_textbox('text2', 'text2-id');
+
+    // $miForm -> $miForm('test'); 
+
+
+
+    $miForm->showForm();
 }
-add_action('admin_menu','socialMedia_menu');
+//add_action('admin_menu','socialMedia_menu');
 function socialMedia_menu(){
     //$sesuSettingsPage = new SectionSettings( );
     add_menu_page(
