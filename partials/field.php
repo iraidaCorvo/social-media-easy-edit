@@ -1,18 +1,27 @@
 <?php
 //namespace \partials\field;
+//echo __NAMESPACE__;
 class field{
     protected $props = [
         'value'    => '',
         'class'    => '',
         'name'     => '',
-        'id'       => ''
+        'id'       => '',
+        'label'    => ''
     ];
-     // function __autoload($classname) {
+     //function __autoload($classname) {
     //     $filename = "./". $classname .".php";
     //     include_once($filename);
     // }
     
-    function __construct($name = 'name', $id = '', $class = '', $value = ''){
+    /*function __autoload($class) {
+    $class = 'classes\' . str_replace('\\', '/', $class) . '.php';
+        require_once($class);
+    
+    }*/
+    
+    function __construct($name = 'name', $id = '', $class = '', $value = '', $label = ''){
+        
         if( empty($id) ) $id = rand();
         foreach( $this->props as $prop => $value ) $this->props[$prop] = $$prop;
     }
@@ -21,6 +30,9 @@ class field{
         switch( $name ):
             case 'ID':
                 return $this->props['id'];
+            
+            case 'Name':
+                return $this->props['name'];
 
         endswitch;
     }
@@ -32,11 +44,16 @@ class field{
                 else unset( $this->props['required']);
                 break;
             case 'Value':
-                $this->value = $this->sanitize($value);
+                $this->props['value'] = $this->sanitize($value);
+                break;
+
+            case 'Label':
+                $this->props['label'] = $value;
                 break;
 
         endswitch;
     }
+
     function serialize_attrs(){
         $attrs = '';
         foreach(array_keys( $this->props ) as $attr):
@@ -48,5 +65,13 @@ class field{
     }
 
     function sanitize($value){return $value;}
+   
+    function __toString(){
+        return $this-> render();
+    }
+    function render(){
+        $attrs = $this->serialize_attrs();
+        $label = $this->props['label'];
+        include SMEE_VIEWS . 'input.php';
+    } 
 }
-?>
