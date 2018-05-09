@@ -1,11 +1,12 @@
 <?php 
-//namespace SMEE\fields\input;
+
 class input extends field{
     const INFINITE_SIZE = -1;
     protected $type;
     private $minLength = self::INFINITE_SIZE;
-    function __construct($name = 'name', $id = '', $class = '', $value = '', $type = 'text'){
-        parent::__construct($name, $id, $class, $value);
+    function __construct($name = 'name', $id = '', $class = '', $value = '', $type = 'text', $label=''){
+        
+        parent::__construct($name, $id, $class, $value, $label);
         
         $this->props['type'] = $type;
     }
@@ -28,10 +29,12 @@ class input extends field{
     }
 
 
-    function __toString(){
+    /*function __toString(){
         $attrs = $this->serialize_attrs();
-        return "<input $attrs>";
-    }
+        $label = $this->props['label'];
+        include SMEE_VIEWS . 'input.php';
+        
+    }*/
 }
     class min_length extends Exception
     {
