@@ -12,18 +12,27 @@
 //echo __NAMESPACE__;
 define( 'SMEE_PATH', plugin_dir_path(__FILE__));
 define( 'SMEE_PARTIALS_PATH', SMEE_PATH . 'partials/');
+define( 'SMEE_INPUTS_PATH', SMEE_PARTIALS_PATH . 'inputs/');
+define( 'SMEE_VIEWS', SMEE_PATH . 'views/');
 
 include_once 'form.php';
 function testing(){
     $miForm = new forms();
-    $miForm->add_textbox('text1', 'text1-id');
-    $miForm->add_textbox('text2', 'text2-id');
+    $miForm->add_text('text1', 'text1-id','text1-class', 'text 1' );
+    $miForm->add_text('text2', 'text2-id', '','text 2');
+    $miForm->add_password('psw', 'psw-id','password');
+    $miForm->set_values($_POST);
+    $miForm->render();
+    $miForm->Method='GET';
+    //showText($miForm->Method);
+    
 
+    
     // $miForm -> $miForm('test'); 
 
 
 
-    $miForm->showForm();
+    //$miForm->showForm();
 }
 //add_action('admin_menu','socialMedia_menu');
 function socialMedia_menu(){
