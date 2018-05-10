@@ -6,9 +6,9 @@ class field{
         'value'    => '',
         'class'    => '',
         'name'     => '',
-        'id'       => '',
-        'label'    => ''
+        'id'       => ''
     ];
+    protected $label = null ;
      //function __autoload($classname) {
     //     $filename = "./". $classname .".php";
     //     include_once($filename);
@@ -20,10 +20,18 @@ class field{
     
     }*/
     
-    function __construct($name = 'name', $id = '', $class = '', $value = '', $label = ''){
+    function __construct( string $name, array $args=[]){
+        if(!is_array($args)) $args=[];
+        if( empty($args['id']) ) $args['id'] = rand(); 
+        $args['name']=$name;
+        foreach($this->props as $prop=>$value):
+            if(! isset($args[$prop])) continue;
+            $this->props[$prop]=$args[$prop];
+
+        endforeach;
+
+        if(isset($args['label'])) $this->label = $args['label'];
         
-        if( empty($id) ) $id = rand();
-        foreach( $this->props as $prop => $value ) $this->props[$prop] = $$prop;
     }
 
     function __get($name){
@@ -70,8 +78,11 @@ class field{
         return $this-> render();
     }
     function render(){
-        $attrs = $this->serialize_attrs();
-        $label = $this->props['label'];
-        include SMEE_VIEWS . 'input.php';
+        return [
+            'attrs' => $this->serialize_attrs(),
+            'label' => $this->label,
+            'attrsValues'   => $this->props
+        ];
+
     } 
 }
