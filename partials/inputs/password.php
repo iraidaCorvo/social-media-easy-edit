@@ -1,11 +1,10 @@
 <?php 
 
 class input_password extends input{
-    function __construct($name = 'name', $id = '', $class = '', $value = '', $label = ''){
+    function __construct($name, $args=[]){
+        parent::__construct($name, array_merge($args, ['type' => 'password']));
         
-        parent::__construct($name, $id, $class, $value, 'password', $label);
     }
-
     function __set($name, $value){
         switch( $name ):
             case 'Value':
