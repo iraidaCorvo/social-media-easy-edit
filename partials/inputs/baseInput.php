@@ -4,12 +4,7 @@ class input extends field{
     const INFINITE_SIZE = -1;
     protected $type;
     private $minLength = self::INFINITE_SIZE;
-    function __construct($name = 'name', $id = '', $class = '', $value = '', $type = 'text', $label=''){
-        
-        parent::__construct($name, $id, $class, $value, $label);
-        
-        $this->props['type'] = $type;
-    }
+   
     function __set($name, $value){
         switch( $name ):
             case 'MinLength':
@@ -28,7 +23,12 @@ class input extends field{
         return parent::sanitize($value);
     }
 
-
+    function render(){
+        $attrs = parent::render();
+        extract($attrs);
+        include SMEE_VIEWS . 'input.php';
+        //include SMEE_VIEWS . 'submit.php';
+    }   
     /*function __toString(){
         $attrs = $this->serialize_attrs();
         $label = $this->props['label'];
