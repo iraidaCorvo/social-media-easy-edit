@@ -6,21 +6,18 @@ class field{
         'value'    => '',
         'class'    => '',
         'name'     => '',
-        'id'       => ''
+        'id'       => '',
+        'placeholder' => '',
+        'required' => '',
+        'readOnly' => ''
     ];
+
+    protected $readOnlyProps=['name'];
     protected $label = null ;
-     //function __autoload($classname) {
-    //     $filename = "./". $classname .".php";
-    //     include_once($filename);
-    // }
-    
-    /*function __autoload($class) {
-    $class = 'classes\' . str_replace('\\', '/', $class) . '.php';
-        require_once($class);
-    
-    }*/
+    protected $view  = 'field';
     
     function __construct( string $name, array $args=[]){
+        //showArray($this->readOnlyProps);
         if(!is_array($args)) $args=[];
         if( empty($args['id']) ) $args['id'] = rand(); 
         $args['name']=$name;
@@ -31,6 +28,7 @@ class field{
         endforeach;
 
         if(isset($args['label'])) $this->label = $args['label'];
+        //showArray($args);
         
     }
 
@@ -46,23 +44,27 @@ class field{
     }
 
     function __set($name, $value){
+        $name_prop= strtolower($name);
         switch( $name ):
             case 'Required':
-                if( true === $value ) $this->props['required'] = $value;
-                else unset( $this->props['required']);
+                if( true === $value ) $this->props[$name_prop] = $value;
+                else unset( $this->props[$name_prop]);
                 break;
             case 'Value':
-                $this->props['value'] = $this->sanitize($value);
+                $this->props[$name_prop] = $this->sanitize($value);
                 break;
+    
+                default:
+                if(!in_array($name_prop, $this->readOnlyProps) and in_array( $name_prop, array_keys($this->props))):
 
-            case 'Label':
-                $this->props['label'] = $value;
+                    $this->props[$name_prop] = (string) $value;
+                endif;
                 break;
-
         endswitch;
     }
 
     function serialize_attrs(){
+        //showArray($this->props);
         $attrs = '';
         foreach(array_keys( $this->props ) as $attr):
             if( !empty($this->props[$attr])):
@@ -70,6 +72,8 @@ class field{
             endif;
         endforeach;
         return $attrs;
+        
+       
     }
 
     function sanitize($value){return $value;}
@@ -81,8 +85,9 @@ class field{
         return [
             'attrs' => $this->serialize_attrs(),
             'label' => $this->label,
-            'attrsValues'   => $this->props
+            'attrsValues'=> $this->props
         ];
+        
 
     } 
 }
