@@ -1,9 +1,9 @@
 <?php 
 require_once "field.php";
 class select extends field{
-
-    function __construct($name = 'name', $id = '', $class = '', $value = ''){
-        parent::__construct($name, $id, $class, $value);
+    //array con opciones
+    function __construct($name = 'name', $args=[]){
+        parent::__construct($name, $args);
     }
 
     function render(){}
