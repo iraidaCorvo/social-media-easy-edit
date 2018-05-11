@@ -2,7 +2,8 @@
 
 class input_password extends input{
     function __construct($name, $args=[]){
-        parent::__construct($name, array_merge($args, ['type' => 'password']));
+        $this->props['type']='password';
+        parent::__construct($name, $args);
         
     }
     function __set($name, $value){
