@@ -127,7 +127,6 @@ class forms {
 
 
     public function render(){
-        //echo $this->method;
         $method = $this->method;
         $action = $this->action;
         $fields = $this->fields;

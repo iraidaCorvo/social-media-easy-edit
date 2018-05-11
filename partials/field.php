@@ -1,6 +1,5 @@
 <?php
-//namespace \partials\field;
-//echo __NAMESPACE__;
+
 class field{
     protected $props = [
         'value'    => '',
@@ -17,7 +16,6 @@ class field{
     protected $view  = 'field';
     
     function __construct( string $name, array $args=[]){
-        //showArray($this->readOnlyProps);
         if(!is_array($args)) $args=[];
         if( empty($args['id']) ) $args['id'] = rand(); 
         $args['name']=$name;
@@ -28,7 +26,6 @@ class field{
         endforeach;
 
         if(isset($args['label'])) $this->label = $args['label'];
-        //showArray($args);
         
     }
 
@@ -64,7 +61,6 @@ class field{
     }
 
     function serialize_attrs(){
-        //showArray($this->props);
         $attrs = '';
         foreach(array_keys( $this->props ) as $attr):
             if( !empty($this->props[$attr])):

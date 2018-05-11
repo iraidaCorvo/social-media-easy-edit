@@ -7,7 +7,6 @@ class input extends field{
 
     function __construct($name, $args=[]){
         $this->readOnlyProps[]='type';
-        //showArray($this->readOnlyProps);
         $this->view = 'input';
         parent::__construct($name, $args);        
     }
