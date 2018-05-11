@@ -1,1 +1,1 @@
-<input type = '<?php echo $type ?>' value='<?php echo $value ?>'/>
+<input type = '<?php echo $attrsValues['type'] ?>' value='<?php echo $attrsValues['value'] ?>'/>
