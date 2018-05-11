@@ -4,13 +4,22 @@ class input extends field{
     const INFINITE_SIZE = -1;
     protected $type;
     private $minLength = self::INFINITE_SIZE;
-   
+
+    function __construct($name, $args=[]){
+        $this->readOnlyProps[]='type';
+        //showArray($this->readOnlyProps);
+        $this->view = 'input';
+        parent::__construct($name, $args);        
+    }
+
     function __set($name, $value){
+        $name_prop= strtolower($name);
         switch( $name ):
             case 'MinLength':
                 if(!is_int($value)) throw new InvalidArgumentException('Not an integer.');
                 $this->minLength = (int)$value;
             break;
+            
             default: 
                 parent::__set($name,$value);
         endswitch;
@@ -26,7 +35,9 @@ class input extends field{
     function render(){
         $attrs = parent::render();
         extract($attrs);
-        include SMEE_VIEWS . 'input.php';
+        
+        
+        include SMEE_VIEWS . $this->view . '.php';
         //include SMEE_VIEWS . 'submit.php';
     }   
     /*function __toString(){
