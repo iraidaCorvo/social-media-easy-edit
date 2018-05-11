@@ -90,8 +90,6 @@ class forms {
     }
 
     public function set_values($values){
-        // showArray($values);
-        // showArray($this->fields);
 
         foreach($this->fields as $field => $value):
             if( ! array_key_exists($field, $values)) continue;
