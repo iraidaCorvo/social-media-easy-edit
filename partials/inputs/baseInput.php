@@ -38,14 +38,7 @@ class input extends field{
         
         
         include SMEE_VIEWS . $this->view . '.php';
-        //include SMEE_VIEWS . 'submit.php';
     }   
-    /*function __toString(){
-        $attrs = $this->serialize_attrs();
-        $label = $this->props['label'];
-        include SMEE_VIEWS . 'input.php';
-        
-    }*/
 }
     class min_length extends Exception
     {
