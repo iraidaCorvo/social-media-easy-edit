@@ -43,12 +43,6 @@ class forms {
     }
     private function add_field($field){
          $this->fields[$field->Name] = $field;
-        //  echo "<form>
-        //     $field
-        //     <input type='submit' value='Enviar'>
-        //  </form>
-        //  ";
-         //showArray($field);
     }
 
     private function add_field_din($fieldType, $args){
