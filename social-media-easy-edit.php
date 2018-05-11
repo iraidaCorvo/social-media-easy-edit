@@ -18,23 +18,32 @@ define( 'SMEE_VIEWS', SMEE_PATH . 'views/');
 include_once 'form.php';
 function testing(){
     $miForm = new forms();
-    $miForm->add_text('text1', 'text1-id','text1-class', 'text 1' );
-    $miForm->add_text('text2', 'text2-id', '','text 2');
-    $miForm->add_password('psw', 'psw-id','password');
+    $miForm->add_text([
+        'name'  => 'text1',
+        'label' => 'text1-etiqueta:',
+        'placeholder' => 'hola'
+
+    ]);        
+    $miForm->add_text([
+        'name' => 'text2',
+        'id' =>'text2-id',
+        'class'=> 'text2-class',
+        'label' => 'text2-etiqueta'
+    ]);
+
+    $miForm->add_password([
+        'name'=>'password',
+        'id'=>'psw-id',
+        'label'=>'password'
+    ]);
+    $miForm->add_submit([
+        'value' => 'submit-value',
+    ]);
     $miForm->set_values($_POST);
     $miForm->render();
     $miForm->Method='GET';
-    //showText($miForm->Method);
-    
-
-    
-    // $miForm -> $miForm('test'); 
-
-
-
-    //$miForm->showForm();
 }
-//add_action('admin_menu','socialMedia_menu');
+add_action('admin_menu','socialMedia_menu');
 function socialMedia_menu(){
     //$sesuSettingsPage = new SectionSettings( );
     add_menu_page(
