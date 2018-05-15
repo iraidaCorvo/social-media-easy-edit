@@ -1,5 +1,4 @@
 <?php 
-require_once "field.php";
 class select extends field{
     protected $values = [
         'value1'    => '',
@@ -10,7 +9,10 @@ class select extends field{
 
     //array con opciones
     function __construct($name = 'name', $args=[]){
-        $this->props['type']='select';
+        foreach($this->values as $field => $value){
+            $this->props[$field] = $value[$field];
+        }
+        $this->view = 'select';
         parent::__construct($name, $args);
     }
 
@@ -20,4 +22,11 @@ class select extends field{
             parent::__set($name,$value);
         endswitch;
     }
+    function render(){
+        $attrs = parent::render();
+        extract($attrs);
+        
+        
+        include SMEE_VIEWS . $this->view . '.php';
+    }   
 }
