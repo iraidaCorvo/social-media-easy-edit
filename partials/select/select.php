@@ -1,8 +1,10 @@
 <?php 
 require_once "field.php";
 class select extends field{
+
     //array con opciones
     function __construct($name = 'name', $args=[]){
+        $this->props['type']='select';
         parent::__construct($name, $args);
     }
 
