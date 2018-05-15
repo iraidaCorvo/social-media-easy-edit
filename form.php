@@ -3,6 +3,7 @@ require_once SMEE_PARTIALS_PATH . 'field.php';
 require_once SMEE_INPUTS_PATH . 'text.php';
 require_once SMEE_INPUTS_PATH . 'password.php';
 require_once SMEE_INPUTS_PATH . 'submit.php';
+require_once SMEE_SELECT_PATH . 'select.php';
 
 class forms {
     private $fields = [];
@@ -65,6 +66,16 @@ class forms {
         ]);*/
         
     }
+    public function add_select( array $args){
+
+        if(!$args['name']) {
+            return false;
+        }
+        if( ! $args['id'] ) $args['id'] = $args['name'];
+        $input = new select($args['name'], $args);
+        $this->add_field($input);
+   
+    }
     public function add_submit( array $args ){
     
         $input = new input_submit($args);
@@ -73,8 +84,6 @@ class forms {
     }
     public function add_text( array $args ){
         if(!$args['name']) {
-            // throw exception
-            // or return null
             return false;
         }
         if( ! $args['id'] ) $args['id'] = $args['name'];
