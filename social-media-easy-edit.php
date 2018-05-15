@@ -6,10 +6,7 @@
 * Author: Iraida Artiles Corvo
 * License: GPL2
 **/
-//use \partials\field as field;
 
-//namespace partials\input;
-//echo __NAMESPACE__;
 define( 'SMEE_PATH', plugin_dir_path(__FILE__));
 define( 'SMEE_PARTIALS_PATH', SMEE_PATH . 'partials/');
 define( 'SMEE_INPUTS_PATH', SMEE_PARTIALS_PATH . 'inputs/');
