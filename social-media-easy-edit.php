@@ -11,6 +11,7 @@ define( 'SMEE_PATH', plugin_dir_path(__FILE__));
 define( 'SMEE_PARTIALS_PATH', SMEE_PATH . 'partials/');
 define( 'SMEE_INPUTS_PATH', SMEE_PARTIALS_PATH . 'inputs/');
 define( 'SMEE_VIEWS', SMEE_PATH . 'views/');
+define( 'SMEE_SELECT_PATH', SMEE_PARTIALS_PATH . 'select/');
 
 include_once 'form.php';
 function testing(){
@@ -34,7 +35,17 @@ function testing(){
         'label'=>'password'
     ]);
     $miForm->add_submit([
-        'value' => 'submit-value',
+        'value' => 'Enviar',
+    ]);
+    $miForm->add_select([
+        'name'=>'select',
+        'label'=>'Seleccionar',
+        'value1'=>'Rojo',
+        'value2'=>'Azul',
+        'value3'=>'Verde',
+        'value4'=>'Amarillo',
+        'name'=>'select-name'
+
     ]);
     $miForm->set_values($_POST);
     $miForm->render();
