@@ -1,17 +1,13 @@
 <?php 
 class select extends field{
-    protected $values = [
-        'value1'    => '',
-        'value2'    => '',
-        'value3'     => '',
-        'value4'       => ''
-    ];
+    protected $options = [];
 
     //array con opciones
     function __construct($name = 'name', $args=[]){
-        foreach($this->values as $field => $value){
-            $this->props[$field] = $value[$field];
-        }
+        if(!empty($args['options']) and is_array($args['options'])): 
+            $this->options = $args['options'];
+        endif;
+
         $this->view = 'select';
         parent::__construct($name, $args);
     }
@@ -22,11 +18,13 @@ class select extends field{
             parent::__set($name,$value);
         endswitch;
     }
-    function render(){
+    function render(){  
+        
         $attrs = parent::render();
+        $attrs['options']=$this->options;
+        $selected = $attrs['attrsValues']['value'];
+        //showArray($attrs);
         extract($attrs);
-        
-        
         include SMEE_VIEWS . $this->view . '.php';
     }   
 }
