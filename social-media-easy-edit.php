@@ -6,6 +6,14 @@
 * Author: Iraida Artiles Corvo
 * License: GPL2
 **/
+/*
+[
+    0 =>[
+        $type=input_text;
+        $args=>[];
+    ]
+]
+*/
 
 define( 'SMEE_PATH', plugin_dir_path(__FILE__));
 define( 'SMEE_PARTIALS_PATH', SMEE_PATH . 'partials/');
@@ -21,32 +29,36 @@ function testing(){
         'label' => 'text1-etiqueta:',
         'placeholder' => 'hola'
 
-    ]);        
-    $miForm->add_text([
+    ])    
+    ->add_text([
         'name' => 'text2',
         'id' =>'text2-id',
         'class'=> 'text2-class',
         'label' => 'text2-etiqueta'
-    ]);
+    ])
 
-    $miForm->add_password([
+    ->add_password([
         'name'=>'password',
         'id'=>'psw-id',
         'label'=>'password'
-    ]);
-    $miForm->add_submit([
+    ])
+    ->add_select([
+        'label'=>'Seleccionar',
+        'name'=>'select-name',
+        'options' =>[
+            'value1' => 'Rojo',
+            'value2' => 'Azul',
+            'value3' => 'Amarillo',
+            'value4' => 'Naranja'
+        ]
+
+    ])
+    ->add_submit([
         'value' => 'Enviar',
     ]);
-    $miForm->add_select([
-        'name'=>'select',
-        'label'=>'Seleccionar',
-        'value1'=>'Rojo',
-        'value2'=>'Azul',
-        'value3'=>'Verde',
-        'value4'=>'Amarillo',
-        'name'=>'select-name'
 
-    ]);
+  
+    
     $miForm->set_values($_POST);
     $miForm->render();
     $miForm->Method='GET';
