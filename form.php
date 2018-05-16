@@ -44,6 +44,7 @@ class forms {
     }
     private function add_field($field){
          $this->fields[$field->Name] = $field;
+         return $this;
     }
 
     private function add_field_din($fieldType, $args){
@@ -57,7 +58,7 @@ class forms {
         }
         if( ! $args['id'] ) $args['id'] = $args['name'];
         $password = new input_password($args['name'], $args);
-        $this->add_field($password);
+        return $this->add_field($password);
         
         /*$this->add_field_din('input_password',[
             'id'    => $passwordId,
@@ -71,15 +72,14 @@ class forms {
         if(!$args['name']) {
             return false;
         }
-        if( ! $args['id'] ) $args['id'] = $args['name'];
         $input = new select($args['name'], $args);
-        $this->add_field($input);
+        return $this->add_field($input);
    
     }
     public function add_submit( array $args ){
     
         $input = new input_submit($args);
-        $this->add_field($input);
+         return $this->add_field($input);
 
     }
     public function add_text( array $args ){
@@ -88,14 +88,8 @@ class forms {
         }
         if( ! $args['id'] ) $args['id'] = $args['name'];
         $input = new input_text($args['name'], $args);
-        $this->add_field($input);
-
-        /*$this->add_field_din('input_text',[
-            'id'    => $textboxId,
-            'name'  => $textboxName,
-            'value' => ( isset($_POST[$textboxName]) ) ? $_POST[$textboxName] : ''
-        ]);*/
-        
+        return $this->add_field($input); 
+          
     }
 
     public function set_values($values){
