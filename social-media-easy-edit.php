@@ -6,14 +6,6 @@
 * Author: Iraida Artiles Corvo
 * License: GPL2
 **/
-/*
-[
-    0 =>[
-        $type=input_text;
-        $args=>[];
-    ]
-]
-*/
 
 define( 'SMEE_PATH', plugin_dir_path(__FILE__));
 define( 'SMEE_PARTIALS_PATH', SMEE_PATH . 'partials/');
