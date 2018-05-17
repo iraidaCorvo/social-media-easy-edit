@@ -13,8 +13,11 @@ class forms {
     private $hasErrors = false;
     private $method = 'POST';
     private $action = '';
+    private $submit_enable;
 
-
+    function __construct(bool $submit_enable = true){
+       $this->submit_enable = $submit_enable ;
+    }
     function __get($name){
         switch( $name ):
             case 'Method':
@@ -91,6 +94,13 @@ class forms {
         return $this->add_field($input); 
           
     }
+    public function generate_form($fields){
+        foreach($fields as $field):
+            $func = 'add_' . $field['type'];
+            $args = $field['args'];
+            $this->$func($args);
+        endforeach;
+    }
 
     public function set_values($values){
 
@@ -132,6 +142,12 @@ class forms {
     public function render(){
         $method = $this->method;
         $action = $this->action;
+        if($this->submit_enable):
+            $this->add_submit([
+                'value' => 'Enviar',
+            ]);
+        endif;
+        
         $fields = $this->fields;
         
         include SMEE_VIEWS . 'form.php';
