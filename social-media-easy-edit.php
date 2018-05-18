@@ -16,21 +16,17 @@ define( 'SMEE_SELECT_PATH', SMEE_PARTIALS_PATH . 'select/');
 include_once 'form.php';
 
 
-    function form1($form){
-        $miForm = new forms();
+    function generate_form($form, $with_submit=true){
+         
+        $miForm = new forms($with_submit);
         $miForm->generate_form($form);
         $miForm->set_values($_POST);
         $miForm->render();
         $miForm->Method='GET';
+
     }
-    function form2($form){
-        $secondForm = new forms(false);
-        $secondForm->generate_form($form);
-        $secondForm->set_values($_POST);
-        $secondForm->render();
-        $secondForm->Method='GET';
-    }
-    
+
+
     function socialMedia_menu(){
         add_action('admin_menu','socialMedia_menu');
         //$sesuSettingsPage = new SectionSettings( );
