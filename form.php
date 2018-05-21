@@ -4,6 +4,7 @@ require_once SMEE_INPUTS_PATH . 'text.php';
 require_once SMEE_INPUTS_PATH . 'password.php';
 require_once SMEE_INPUTS_PATH . 'submit.php';
 require_once SMEE_SELECT_PATH . 'select.php';
+require_once SMEE_INPUTS_PATH . 'hidden.php';
 
 class forms {
     private $fields = [];
@@ -54,7 +55,15 @@ class forms {
         $field = new $fieldType($args);
         $this->fields[$field->ID] = $field;
     }
-
+    public function add_hidden( array $args ){
+        if(!$args['name']) {
+            return false;
+        }
+        if( ! $args['id'] ) $args['id'] = $args['name'];
+        $input = new input_hidden($args['name'], $args);
+        return $this->add_field($input); 
+          
+    }
     public function add_password( array $args ){
         if(!$args['name']) {
             return false;
