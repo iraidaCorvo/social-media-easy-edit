@@ -59,6 +59,8 @@ class field{
                 break;
         endswitch;
     }
+    
+    function sanitize($value){return $value;}
 
     function serialize_attrs(){
         $attrs = '';
@@ -72,9 +74,7 @@ class field{
        
     }
 
-    function sanitize($value){return $value;}
-   
-    function __toString(){
+   function __toString(){
         return $this-> render();
     }
     function render(){

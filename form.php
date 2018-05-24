@@ -1,10 +1,10 @@
 <?php 
-require_once SMEE_PARTIALS_PATH . 'field.php';
-require_once SMEE_INPUTS_PATH . 'text.php';
+require_once SMEE_INPUTS_PATH . 'hidden.php';
 require_once SMEE_INPUTS_PATH . 'password.php';
 require_once SMEE_INPUTS_PATH . 'submit.php';
+require_once SMEE_INPUTS_PATH . 'text.php';
+require_once SMEE_PARTIALS_PATH . 'field.php';
 require_once SMEE_SELECT_PATH . 'select.php';
-require_once SMEE_INPUTS_PATH . 'hidden.php';
 
 class forms {
     private $fields = [];

@@ -1,15 +1,15 @@
 <?php
 class configurationPage{
-    private $page_title ;
-    private $menu_title;
-    private $menu_slug;
-    private $function='';
     private $capability='';
+    private $function='';
     private $icon_url='';
-    private $position='';
+    private $menu_slug;
+    private $menu_title;
+    private $page_title ;
     private $parent_slug = null;
-    private $subpages=[];
+    private $position='';
     private $prefix='smee_';
+    private $subpages=[];
 
     function __construct( string $page_title, string $menu_title, string $capability, string $menu_slug, string $parent_slug = null){
         $this->page_title  = $page_title;
@@ -23,15 +23,15 @@ class configurationPage{
         add_action('admin_menu', [$this,'admin_menu']);
     }
     
-    public function add_section( array $args ){
-
-    }
     public function add_page(string $page_title, string $menu_title, string $capability, string $menu_slug){
         return $this;
         if( ! empty($this->parent_slug )) return $this;
         $this->subpages[$menu_slug] = new configurationPage (
             $page_title, $menu_title, $capability, $menu_slug, $this->menu_slug
         );
+    }
+
+    public function add_section( array $args ){
     }
     
     public function admin_init(){
@@ -59,6 +59,16 @@ class configurationPage{
             ]
         );
     }
+    public function admin_menu(){
+        add_menu_page(
+            $this->page_title,
+            $this->menu_title,
+            $this->capability,
+            $this->menu_slug,
+            [$this,'wporg_options_page_html']
+        );
+        
+    }
     function wporg_field_pill_cb( $args ) {
         // get the value of the setting we've registered with register_setting()
         $options = get_option( $this->prefix . $this->menu_slug );
@@ -82,16 +92,6 @@ class configurationPage{
         <?php esc_html_e( 'You take the red pill and you stay in Wonderland and I show you how deep the rabbit-hole goes.', 'wporg' ); ?>
         </p>
         <?php
-    }
-    public function admin_menu(){
-        add_menu_page(
-            $this->page_title,
-            $this->menu_title,
-            $this->capability,
-            $this->menu_slug,
-            [$this,'wporg_options_page_html']
-        );
-        
     }
     function wporg_options_page_html() {
         // check user capabilities
