@@ -14,6 +14,20 @@ define( 'SMEE_VIEWS', SMEE_PATH . 'views/');
 define( 'SMEE_SELECT_PATH', SMEE_PARTIALS_PATH . 'select/');
 
 include_once 'form.php';
+include_once 'configurationPage.php';
+
+$configpage = new configurationPage(
+    'Social Media Easy Edit',
+    'SM Easy Edit',
+    'manage_options',
+    'SocialMedia'
+);
+$configpage->add_page(
+    'Social Media Easy Edit1',
+    'SM Easy Edit1',
+    'manage_options',
+    'SocialMedia1'
+);
 
 
     function generate_form($form, $with_submit=true){
@@ -34,15 +48,15 @@ include_once 'form.php';
             'Social Media Easy Edit',
             'SM Easy Edit',
             'manage_options',
-            'Social Media',
+            'SocialMedia',
             'social_media_options_twitter',
             'dashicons-groups',
             '40'
         );
 
-        add_submenu_page( 'Social Media', 'Twitter', 'Twitter', 'manage_options', 'Social Media');
-        add_submenu_page( 'Social Media', 'Facebook', 'Facebook', 'manage_options', 'SM_options_facebook', 'SM_options_facebook');
-        add_submenu_page( 'Social Media', 'Linkedin', 'Linkedin', 'manage_options', 'SM_options_submenu1');
-        add_submenu_page( 'Social Media', 'Spotify', 'Spotify', 'manage_options', 'SM_options_submenu2');
+        add_submenu_page( 'SocialMedia', 'Twitter', 'Twitter', 'manage_options', 'Social Media');
+        add_submenu_page( 'SocialMedia', 'Facebook', 'Facebook', 'manage_options', 'SM_options_facebook', 'SM_options_facebook');
+        add_submenu_page( 'SocialMedia', 'Linkedin', 'Linkedin', 'manage_options', 'SM_options_submenu1');
+        add_submenu_page( 'SocialMedia', 'Spotify', 'Spotify', 'manage_options', 'SM_options_submenu2');
     }
 
