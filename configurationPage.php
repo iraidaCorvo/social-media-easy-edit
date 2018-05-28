@@ -1,28 +1,78 @@
 <?php
 class configurationPage{
-    private $capability='';
-    private $function='';
-    private $icon_url='';
+    /* WP non optionals */
     private $menu_slug;
     private $menu_title;
     private $page_title ;
+    
+    // WP optionals
+    private $capability  = '';
+    private $function    = '';
+    private $icon_url    = '';
     private $parent_slug = null;
-    private $position='';
-    private $prefix='smee_';
-    private $subpages=[];
+    private $position    = '';
+ 
+    // SMEE props
+    private $prefix      = 'smee_';
+    private $sections    = [];
+    private $subpages    = [];
 
     function __construct( string $page_title, string $menu_title, string $capability, string $menu_slug, string $parent_slug = null){
         $this->page_title  = $page_title;
         $this->menu_title  = $menu_title;
         $this->capability  = $capability;
-        $this->menu_slug   = $menu_slug;
+        $this->Menu_Slug   = $menu_slug; 
         $this->parent_slug = $parent_slug;
         
-       
+        $this->sections = [
+            [
+                'id' => 'wporg_section_developers',
+                'title' => 'The Matrix has you.',
+                'fields' =>[
+                    [
+                        'id' => 'wporg_field_pill',
+                        'title' => 'Pill'
+                    ]
+                ]
+            ],
+            [
+                'id' => 'wporg_section_developers_b',
+                'title' => 'The Matrix has you akjsdhaks.',
+                'fields' =>[
+                    [
+                        'id' => 'wporg_field_pill_2',
+                        'title' => 'Pilllkj lsd'
+                    ]
+                ]
+            ]
+        ];
         add_action('admin_init', [$this,'admin_init']);
         add_action('admin_menu', [$this,'admin_menu']);
     }
-    
+
+    function __get($name){
+        switch( $name ):
+            case 'Page_Slug':
+                return $this->menu_slug;
+            case 'Domain':
+                return SMEE_PLUGIN_DOMAIN;
+            case 'Option_Group':
+                return $this->Page_Slug;
+            case 'Option_Name':
+                return $this->prefix . $this->menu_slug;
+            default:
+        endswitch;
+    }
+
+    function __set($name, $value){
+        switch( $name ):
+            case 'Menu_Slug':
+                $this->menu_slug = str_replace(' ','_', strtolower($value));
+            default:
+        endswitch;
+    }
+
+
     public function add_page(string $page_title, string $menu_title, string $capability, string $menu_slug){
         return $this;
         if( ! empty($this->parent_slug )) return $this;
@@ -33,31 +83,34 @@ class configurationPage{
 
     public function add_section( array $args ){
     }
-    
-    public function admin_init(){
-        register_setting( 'wporg', $this->prefix . $this->menu_slug );
 
-        add_settings_section(
-            'wporg_section_developers',
-            __( 'The Matrix has you.', 'wporg' ),
-            'wporg_section_developers_cb',
-            'wporg'
-        );
-            
-            // register a new field in the "wporg_section_developers" section, inside the "wporg" page
-        add_settings_field(
-            'wporg_field_pill', // as of WP 4.6 this value is used only internally
-            // use $args' label_for to populate the id inside the callback
-            __( 'Pill', 'wporg' ),
-            [$this,'wporg_field_pill_cb'],
-            'wporg',
-            'wporg_section_developers',
-            [
-                'label_for'         => 'wporg_field_pill',
-                'class'             => 'wporg_row',
-                'wporg_custom_data' => 'custom',
-            ]
-        );
+    public function admin_init(){
+        register_setting( $this->Option_Group, $this->Option_Name );
+
+        foreach( $this->sections as $section_pos => $section ):
+            add_settings_section(
+                $section['id'],
+                __( $section['title'], $this->Domain ),
+                [$this,'wporg_section_developers_cb'],
+                $this->Page_Slug
+            );
+            foreach($section['fields'] as $field_pos => $field):
+                add_settings_field(
+                    $field['id'],
+                    __( $field['title'], $this->Domain ),
+                    [$this,'wporg_field_pill_cb'],
+                    $this->Page_Slug,
+                    $section['id'],
+                    [
+                        'label_for'         => $field['id'],
+                        'class'             => 'wporg_row',
+                        'wporg_custom_data' => 'custom',
+                    ]
+                );
+            endforeach;
+                // register a new field in the "wporg_section_developers" section, inside the "wporg" page
+        endforeach;
+
     }
     public function admin_menu(){
         add_menu_page(
@@ -71,7 +124,7 @@ class configurationPage{
     }
     function wporg_field_pill_cb( $args ) {
         // get the value of the setting we've registered with register_setting()
-        $options = get_option( $this->prefix . $this->menu_slug );
+        $options = get_option( $this->Option_Name );
         // output the field
         ?>
         <select id="<?php echo esc_attr( $args['label_for'] ); ?>"
@@ -116,10 +169,10 @@ class configurationPage{
         <form action="options.php" method="post">
         <?php
         // output security fields for the registered setting "wporg"
-        settings_fields( 'wporg' );
+        settings_fields( $this->Option_Group );
         // output setting sections and their fields
         // (sections are registered for "wporg", each field is registered to a specific section)
-        do_settings_sections( 'wporg' );
+        do_settings_sections( $this->Page_Slug );
         // output save settings button
         submit_button( 'Save Settings' );
         ?>
@@ -132,5 +185,11 @@ class configurationPage{
         
     }
     
+
+    function wporg_section_developers_cb( $args ) {
+    ?>
+        <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Follow the white rabbit.', $this->Domain ); ?></p>
+    <?php
+    }
      
 }
