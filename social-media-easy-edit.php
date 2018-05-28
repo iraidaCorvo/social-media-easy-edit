@@ -12,15 +12,16 @@ define( 'SMEE_PARTIALS_PATH', SMEE_PATH . 'partials/');
 define( 'SMEE_INPUTS_PATH', SMEE_PARTIALS_PATH . 'inputs/');
 define( 'SMEE_VIEWS', SMEE_PATH . 'views/');
 define( 'SMEE_SELECT_PATH', SMEE_PARTIALS_PATH . 'select/');
-
-include_once 'form.php';
+define( 'SMEE_PLUGIN_SHORT_NAME' , 'smee');
+define( 'SMEE_PLUGIN_DOMAIN'     , 'smee');
+//include_once 'form.php';
 include_once 'configurationPage.php';
 
 $configpage = new configurationPage(
     'Social Media Easy Edit',
     'SM Easy Edit',
     'manage_options',
-    'SocialMedia'
+    'Social Media'
 );
 $configpage->add_page(
     'Social Media Easy Edit1',
