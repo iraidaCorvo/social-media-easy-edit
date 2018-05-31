@@ -15,6 +15,9 @@ class field{
     protected $label = null ;
     protected $view  = 'field';
     
+    protected $option_name  = '';
+    protected $section_name = '';
+    
     function __construct( string $name, array $args=[]){
         if(!is_array($args)) $args=[];
         if( empty($args['id']) ) $args['id'] = rand(); 
@@ -34,8 +37,14 @@ class field{
             case 'ID':
                 return $this->props['id'];
             
-            case 'Name':
-                return $this->props['name'];
+            case 'Field_Name':
+                $option_name = $this->option_name;
+                $section_name = $this->section_name; 
+                $field_name = $this->props['name']; 
+                return "$option_name[$section_name][$field_name]";
+            
+            case 'Label':
+                return $this->label;
 
         endswitch;
     }
@@ -63,15 +72,33 @@ class field{
     function sanitize($value){return $value;}
 
     function serialize_attrs(){
+        $props = $this->props;
+        $props['name'] = $this->Field_Name; 
         $attrs = '';
-        foreach(array_keys( $this->props ) as $attr):
-            if( !empty($this->props[$attr])):
-                $attrs .= "$attr='" .(($this->props[$attr] === true ) ? null : $this->props[$attr]) ."' ";
+        foreach(array_keys( $props ) as $attr):
+            if( !empty($props[$attr])):
+                $attrs .= "$attr='" .(($props[$attr] === true ) ? null : $props[$attr]) ."' ";
             endif;
         endforeach;
         return $attrs;
         
        
+    }
+
+    function add_settings_field( string $domain, string $page_slug){
+        add_settings_field(
+            $this->ID,
+            __( $this->Label, $domain ),
+            [$this,'render'],
+            $page_slug,
+            $section->ID,
+            
+            [
+                'label_for'         => $field->ID,
+                'class'             => 'wporg_row',
+                'wporg_custom_data' => 'custom',
+            ]
+        );
     }
 
    function __toString(){
