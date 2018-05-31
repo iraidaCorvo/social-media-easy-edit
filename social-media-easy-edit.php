@@ -14,7 +14,7 @@ define( 'SMEE_VIEWS', SMEE_PATH . 'views/');
 define( 'SMEE_SELECT_PATH', SMEE_PARTIALS_PATH . 'select/');
 define( 'SMEE_PLUGIN_SHORT_NAME' , 'smee');
 define( 'SMEE_PLUGIN_DOMAIN'     , 'smee');
-//include_once 'form.php';
+include_once 'section.php';
 include_once 'configurationPage.php';
 
 $configpage = new configurationPage(
@@ -23,17 +23,44 @@ $configpage = new configurationPage(
     'manage_options',
     'Social Media'
 );
-$configpage->add_page(
+
+$configpage
+
+    ->add_section([
+        'id'    => 'test_section',
+        'title' => 'test title'
+    ])
+
+    ->add_field([
+        'type' => 'text',
+        'name' => 'testing'
+    ])
+
+    ->add_field([
+        'type' => 'text',
+        'name' => 'testings'
+    ])
+
+    ->add_section([
+        'id'    => 'test_section2',
+        'title' => 'test title'
+    ])
+
+    ->add_field([
+        'type' => 'text',
+        'name' => 'testing2'
+    ]);
+/*$configpage->add_page(
     'Social Media Easy Edit1',
     'SM Easy Edit1',
     'manage_options',
     'SocialMedia1'
-);
+);*/
 
 
     function generate_form($form, $with_submit=true){
          
-        $miForm = new forms($with_submit);
+        $miForm = new section($with_submit);
         $miForm->generate_form($form);
         $miForm->set_values($_POST);
         $miForm->render();
