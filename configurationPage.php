@@ -17,35 +17,32 @@ class configurationPage{
     private $sections    = [];
     private $subpages    = [];
 
+    private $recent_page = '';
+    private $recent_section = '';
+    
     function __construct( string $page_title, string $menu_title, string $capability, string $menu_slug, string $parent_slug = null){
         $this->page_title  = $page_title;
         $this->menu_title  = $menu_title;
         $this->capability  = $capability;
         $this->Menu_Slug   = $menu_slug; 
         $this->parent_slug = $parent_slug;
-        
-        $this->sections = [
-            [
-                'id' => 'wporg_section_developers',
-                'title' => 'The Matrix has you.',
-                'fields' =>[
-                    [
-                        'id' => 'wporg_field_pill',
-                        'title' => 'Pill'
-                    ]
-                ]
-            ],
-            [
-                'id' => 'wporg_section_developers_b',
-                'title' => 'The Matrix has you akjsdhaks.',
-                'fields' =>[
-                    [
-                        'id' => 'wporg_field_pill_2',
-                        'title' => 'Pilllkj lsd'
-                    ]
-                ]
-            ]
-        ];
+        $this->recent_page = $menu_slug;
+        $this->sections=[];
+        /*$this->sections['test_section']=new section ([
+            'id' => 'test_section',
+            'title' => 'The Matrix has you.'
+        ],false);
+        $this->sections['test_section']->add_text([
+            'name'  => $this->set_field_name('test_section','text1'),
+            'id'    => 'text1',
+            'label' => 'Twitter Account:',
+            'placeholder' => 'hola'
+        ])->add_text([
+            'name'  => $this->set_field_name('test_section','text2'),
+            'id'    => 'text2',
+            'label' => 'Twitter Account:',
+            'placeholder' => 'hola'
+        ]);*/
         add_action('admin_init', [$this,'admin_init']);
         add_action('admin_menu', [$this,'admin_menu']);
     }
@@ -82,27 +79,49 @@ class configurationPage{
     }
 
     public function add_section( array $args ){
+        extract($args);
+        $this->recent_section = $id;
+        $this->sections[$id] = new section ([
+            'id'    => $id,
+            'title' => $title,
+            'page'  => $this->recent_page
+        ],false);
+        return $this;
+    }
+    public function add_field( array $args ){
+        extract($args);        
+        $section_id = $this->recent_section;
+        $this->sections[$section_id]->add_text([
+            'name'  => $this->set_field_name($section_id, $name),
+            'id'    => $name,
+            'label' => 'Twitter Account:',
+            'placeholder' => 'hola'
+        ]);
+        return $this;
     }
 
     public function admin_init(){
         register_setting( $this->Option_Group, $this->Option_Name );
-
-        foreach( $this->sections as $section_pos => $section ):
+        $page_settings=get_option($this->Option_Name);
+       
+        foreach( $this->sections as $section_id => $section ):
             add_settings_section(
-                $section['id'],
-                __( $section['title'], $this->Domain ),
-                [$this,'wporg_section_developers_cb'],
+                $section->ID,
+                __( $section->Title, $this->Domain ),
+                [$section,'render'],
                 $this->Page_Slug
             );
-            foreach($section['fields'] as $field_pos => $field):
+            foreach($section->Fields as $field_id => $field):
+                $field ->Value = $page_settings[$section_id][$field_id];
                 add_settings_field(
-                    $field['id'],
-                    __( $field['title'], $this->Domain ),
-                    [$this,'wporg_field_pill_cb'],
+                    $field->ID,
+                    __( $field->Label, $this->Domain ),
+                    [$field,'render'],
                     $this->Page_Slug,
-                    $section['id'],
+                    $section->ID,
+                    
                     [
-                        'label_for'         => $field['id'],
+                        'label_for'         => $field->ID,
                         'class'             => 'wporg_row',
                         'wporg_custom_data' => 'custom',
                     ]
@@ -122,7 +141,10 @@ class configurationPage{
         );
         
     }
-    function wporg_field_pill_cb( $args ) {
+    private function set_field_name(string $section_name, string $field_name){
+        return $this->Option_Name . "[$section_name][$field_name]";
+    }
+    function crear_campos( $args ) {
         // get the value of the setting we've registered with register_setting()
         $options = get_option( $this->Option_Name );
         // output the field
@@ -184,9 +206,12 @@ class configurationPage{
        public function render(){
         
     }
+    public function borgis_builder(){
+        
+    }
     
 
-    function wporg_section_developers_cb( $args ) {
+    function crea_secciones( $args ) {
     ?>
         <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Follow the white rabbit.', $this->Domain ); ?></p>
     <?php
