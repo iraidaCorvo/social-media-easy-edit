@@ -17,12 +17,15 @@ define( 'SMEE_PLUGIN_DOMAIN'     , 'smee');
 include_once 'section.php';
 include_once 'configurationPage.php';
 
+
 $configpage = new configurationPage(
     'Social Media Easy Edit',
     'SM Easy Edit',
     'manage_options',
-    'Social Media'
+    'social_media'
 );
+
+
 
 $configpage
 
@@ -49,7 +52,24 @@ $configpage
     ->add_field([
         'type' => 'text',
         'name' => 'testing2'
-    ]);
+    ])
+    ->add_page(
+        'Social Media Easy Edit1',
+        'SM Easy Edit1',
+        'manage_options',
+        'social_media2'
+    )
+    ->add_section([
+        'id'    => 'test_section2',
+        'title' => 'test title'
+    ])
+    ->add_field([
+        'type' => 'text',
+        'name' => 'testing2'
+    ])
+    ;
+    //string $page_title, string $menu_title, string $capability, string $menu_slug
+
 /*$configpage->add_page(
     'Social Media Easy Edit1',
     'SM Easy Edit1',
