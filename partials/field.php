@@ -73,7 +73,6 @@ class field{
 
     function serialize_attrs(){
         $props = $this->props;
-        $props['name'] = $this->Field_Name; 
         $attrs = '';
         foreach(array_keys( $props ) as $attr):
             if( !empty($props[$attr])):
