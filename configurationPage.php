@@ -28,21 +28,7 @@ class configurationPage{
         $this->parent_slug = $parent_slug;
         $this->recent_page = $menu_slug;
         $this->sections=[];
-        /*$this->sections['test_section']=new section ([
-            'id' => 'test_section',
-            'title' => 'The Matrix has you.'
-        ],false);
-        $this->sections['test_section']->add_text([
-            'name'  => $this->set_field_name('test_section','text1'),
-            'id'    => 'text1',
-            'label' => 'Twitter Account:',
-            'placeholder' => 'hola'
-        ])->add_text([
-            'name'  => $this->set_field_name('test_section','text2'),
-            'id'    => 'text2',
-            'label' => 'Twitter Account:',
-            'placeholder' => 'hola'
-        ]);*/
+
         add_action('admin_init', [$this,'admin_init']);
         add_action('admin_menu', [$this,'admin_menu']);
     }
@@ -71,39 +57,59 @@ class configurationPage{
 
 
     public function add_page(string $page_title, string $menu_title, string $capability, string $menu_slug){
-        return $this;
         if( ! empty($this->parent_slug )) return $this;
+        $this->recent_page = $menu_slug;
         $this->subpages[$menu_slug] = new configurationPage (
             $page_title, $menu_title, $capability, $menu_slug, $this->menu_slug
         );
+        return $this;
     }
 
     public function add_section( array $args ){
         extract($args);
         $this->recent_section = $id;
-        $this->sections[$id] = new section ([
-            'id'    => $id,
-            'title' => $title,
-            'page'  => $this->recent_page
-        ],false);
+        //showText($this->recent_page,$this->menu_slug);
+        if($this->recent_page == $this->menu_slug):
+           // exit;
+            $this->sections[$id] = new section ([
+                'id'    => $id,
+                'title' => $title,
+                'page'  => $this->recent_page
+            ],false);
+        else: 
+            $this->subpages[$this->recent_page]->add_section($args);
+        endif;
+       // showText($this->recent_page);
         return $this;
     }
     public function add_field( array $args ){
-        extract($args);        
+        extract($args);  
         $section_id = $this->recent_section;
-        $this->sections[$section_id]->add_text([
-            'name'  => $this->set_field_name($section_id, $name),
-            'id'    => $name,
-            'label' => 'Twitter Account:',
-            'placeholder' => 'hola'
-        ]);
+      
+        if($this->recent_page == $this->menu_slug):
+            $this->sections[$section_id]->add_text([
+                'name'  => $this->set_field_name($section_id, $name),
+                'id'    => $name,
+                'label' => 'Twitter Account:',
+                'placeholder' => 'hola'
+            ]);
+         else: 
+             $this->subpages[$this->recent_page]->sections[$section_id]->add_text([
+                'name'  => $this->set_field_name($section_id, $name),
+                'id'    => $name,
+                'label' => 'Twitter Account:',
+                'placeholder' => 'hola'
+            ]);
+         endif;     
+
         return $this;
     }
 
     public function admin_init(){
         register_setting( $this->Option_Group, $this->Option_Name );
         $page_settings=get_option($this->Option_Name);
-       
+       /*showText($this->Page_Slug);
+       showArray($this->sections);*/
         foreach( $this->sections as $section_id => $section ):
             add_settings_section(
                 $section->ID,
@@ -132,14 +138,29 @@ class configurationPage{
 
     }
     public function admin_menu(){
-        add_menu_page(
+        $parent_slug = $this->parent_slug;
+        if(empty($parent_slug)):
+            $parent_slug = $this->menu_slug;
+            add_menu_page(
+                $this->page_title,
+                $this->menu_title,
+                $this->capability,
+                $this->menu_slug,
+                [$this,'wporg_options_page_html']
+            );
+        else:
+        endif;
+        /*showText($parent_slug, '$parent_slug');
+        showText($this->menu_slug, '$this->menu_slug');*/
+        add_submenu_page( 
+            $parent_slug,
             $this->page_title,
             $this->menu_title,
             $this->capability,
             $this->menu_slug,
             [$this,'wporg_options_page_html']
         );
-        
+        //showText($parent_slug);
     }
     private function set_field_name(string $section_name, string $field_name){
         return $this->Option_Name . "[$section_name][$field_name]";
