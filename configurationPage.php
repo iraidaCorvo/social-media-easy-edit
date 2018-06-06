@@ -15,9 +15,7 @@ class configurationPage{
     // SMEE props
     private $prefix      = 'smee_';
     private $sections    = [];
-    private $subpages    = [];
 
-    private $recent_page = '';
     private $recent_section = '';
     
     function __construct( string $page_title, string $menu_title, string $capability, string $menu_slug, string $parent_slug = null){
@@ -26,8 +24,8 @@ class configurationPage{
         $this->capability  = $capability;
         $this->Menu_Slug   = $menu_slug; 
         $this->parent_slug = $parent_slug;
-        $this->recent_page = $menu_slug;
         $this->sections=[];
+        
 
         add_action('admin_init', [$this,'admin_init']);
         add_action('admin_menu', [$this,'admin_menu']);
@@ -55,52 +53,29 @@ class configurationPage{
         endswitch;
     }
 
-
-    public function add_page(string $page_title, string $menu_title, string $capability, string $menu_slug){
-        if( ! empty($this->parent_slug )) return $this;
-        $this->recent_page = $menu_slug;
-        $this->subpages[$menu_slug] = new configurationPage (
-            $page_title, $menu_title, $capability, $menu_slug, $this->menu_slug
-        );
-        return $this;
-    }
-
     public function add_section( array $args ){
         extract($args);
         $this->recent_section = $id;
-        //showText($this->recent_page,$this->menu_slug);
-        if($this->recent_page == $this->menu_slug):
-           // exit;
             $this->sections[$id] = new section ([
                 'id'    => $id,
                 'title' => $title,
-                'page'  => $this->recent_page
+                'page'  => $this->menu_slug
             ],false);
-        else: 
-            $this->subpages[$this->recent_page]->add_section($args);
-        endif;
-       // showText($this->recent_page);
         return $this;
     }
     public function add_field( array $args ){
         extract($args);  
         $section_id = $this->recent_section;
-      
-        if($this->recent_page == $this->menu_slug):
-            $this->sections[$section_id]->add_text([
+        //callable
+        if(!empty($section_id)):
+            $add_field = 'add_' . $args['type'];
+            $this->sections[$section_id]->$add_field([
                 'name'  => $this->set_field_name($section_id, $name),
                 'id'    => $name,
                 'label' => 'Twitter Account:',
                 'placeholder' => 'hola'
             ]);
-         else: 
-             $this->subpages[$this->recent_page]->sections[$section_id]->add_text([
-                'name'  => $this->set_field_name($section_id, $name),
-                'id'    => $name,
-                'label' => 'Twitter Account:',
-                'placeholder' => 'hola'
-            ]);
-         endif;     
+        endif;
 
         return $this;
     }
@@ -139,6 +114,7 @@ class configurationPage{
     }
     public function admin_menu(){
         $parent_slug = $this->parent_slug;
+       
         if(empty($parent_slug)):
             $parent_slug = $this->menu_slug;
             add_menu_page(
