@@ -78,25 +78,126 @@ $configpage
         'social_media'
     )
     ->add_section([
-        'id'    => 'test_section',
-        'title' => 'test title'
+        'id'    => 'config_section',
+        'title' => 'Configuration Page'
     ])
     
     ->add_field([
-        'type' => 'password',
-        'name' => 'testing'
+        'type' => 'text',
+        'name' => 'testing',
+        'label' => 'Configuration',
+        'placeholder' => 'Text'
     ])
     ->add_page(
-        'Social Media Easy Edit1',
-        'SM Easy Edit1',
+        'Facebook',
+        'Facebook',
+        'manage_options',
+        'social_media3'
+    )
+    ->add_section([
+        'id'    => 'facebook_section',
+        'title' => 'Configuration Page Facebook'
+    ])
+    ->add_field([
+        'type' => 'text',
+        'name' => 'fb-app-id',
+        'label' =>'App ID',
+        'placeholder' => 'app id'
+    ])
+    ->add_field([
+        'type' => 'password',
+        'name' => 'fb-secret',
+        'label' => 'Secret Facebook',
+        'placeholder' => 'secret facebook'
+    ])
+    ->add_field([
+        'type' => 'text',
+        'name' => 'page-id',
+        'label' =>'Page ID',
+        'placeholder' => 'page id'
+    ])
+    ->add_page(
+        'Instagram',
+        'Instagram',
+        'manage_options',
+        'social_media6'
+    )
+    ->add_section([
+        'id'    => 'instagram_section',
+        'title' => 'Configuration Page Instagram'
+    ])
+    ->add_field([
+        'type' => 'text',
+        'name' => 'inst-client-id',
+        'label' =>'Client Instagram ID',
+        'placeholder' => 'client id'
+    ])
+    ->add_field([
+        'type' => 'password',
+        'name' => 'inst-client-secret',
+        'label' => 'Client Instagram secret',
+        'placeholder' => 'client secret'
+    ])
+    ->add_field([
+        'type' => 'text',
+        'name' => 'inst-access-token',
+        'label' =>'Access token',
+        'placeholder' => 'access token'
+    ])
+    ->add_field([
+        'type' => 'text',
+        'name' => 'inst-callback',
+        'label' =>'Callback URL',
+        'placeholder' => 'callback url'
+    ])
+
+    ->add_page(
+        'Linkedin',
+        'Linkedin',
+        'manage_options',
+        'social_media4'
+    )
+    ->add_page(
+        'Spotify',
+        'Spotify',
+        'manage_options',
+        'social_media5'
+    )
+    ->add_page(
+        'Twitter',
+        'Twitter',
         'manage_options',
         'social_media2'
     )
+    ->add_section([
+        'id'    => 'twitter_section',
+        'title' => 'Configuration Page Twitter'
+    ])
     ->add_field([
         'type' => 'text',
-        'name' => 'testing2'
+        'name' => 'tw-key',
+        'label' =>'Consumer Twitter Key',
+        'placeholder' => 'twitter key'
     ])
-    
+    ->add_field([
+        'type' => 'password',
+        'name' => 'tw-secret',
+        'label' =>'Consumer Twitter Secret',
+        'placeholder' => 'twitter secret'
+    ])
+    ->add_field([
+        'type' => 'text',
+        'name' => 'tw-token',
+        'label' =>'Oauth Twitter Token',
+        'placeholder' => 'twitter oauth token'
+    ])
+    ->add_field([
+        'type' => 'password',
+        'name' => 'tw-token-secret',
+        'label' =>'Oauth Twitter Token secret',
+        'placeholder' => 'twitter oauth secret'
+    ])
+
     ;
     function generate_form($form, $with_submit=true){
          
