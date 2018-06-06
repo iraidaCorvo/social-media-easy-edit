@@ -17,58 +17,6 @@ include_once 'section.php';
 include_once 'configurationPage.php';
 include_once 'smee_menu.php';
 
-
-/*$configpage = new configurationPage(
-    'Social Media Easy Edit',
-    'SM Easy Edit',
-    'manage_options',
-    'social_media'
-);
-
-
-
-$configpage
-
-->add_section([
-        'id'    => 'test_section',
-        'title' => 'test title'
-    ])
-
-    ->add_field([
-        'type' => 'text',
-        'name' => 'testing'
-    ])
-
-    ->add_field([
-        'type' => 'text',
-        'name' => 'testings'
-    ])
-
-    ->add_section([
-        'id'    => 'test_section2',
-        'title' => 'test title'
-    ])
-
-    ->add_field([
-        'type' => 'text',
-        'name' => 'testing2'
-    ])
-    ->add_page(
-        'Social Media Easy Edit1',
-        'SM Easy Edit1',
-        'manage_options',
-        'social_media2'
-    )
-    ->add_section([
-        'id'    => 'test_section2',
-        'title' => 'test title'
-    ])
-    ->add_field([
-        'type' => 'text',
-        'name' => 'testing2'
-    ])
-    ;
-*/
     $smee_menu = new smee_menu_page();
     $smee_menu
     ->add_page(
@@ -209,23 +157,4 @@ $configpage
 
     }
 
-
-    function socialMedia_menu(){
-        add_action('admin_menu','socialMedia_menu');
-        //$sesuSettingsPage = new SectionSettings( );
-        add_menu_page(
-            'Social Media Easy Edit',
-            'SM Easy Edit',
-            'manage_options',
-            'SocialMedia',
-            'social_media_options_twitter',
-            'dashicons-groups',
-            '40'
-        );
-
-        add_submenu_page( 'SocialMedia', 'Twitter', 'Twitter', 'manage_options', 'Social Media');
-        add_submenu_page( 'SocialMedia', 'Facebook', 'Facebook', 'manage_options', 'SM_options_facebook', 'SM_options_facebook');
-        add_submenu_page( 'SocialMedia', 'Linkedin', 'Linkedin', 'manage_options', 'SM_options_submenu1');
-        add_submenu_page( 'SocialMedia', 'Spotify', 'Spotify', 'manage_options', 'SM_options_submenu2');
-    }
 
