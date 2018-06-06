@@ -72,8 +72,8 @@ class configurationPage{
             $this->sections[$section_id]->$add_field([
                 'name'  => $this->set_field_name($section_id, $name),
                 'id'    => $name,
-                'label' => 'Twitter Account:',
-                'placeholder' => 'hola'
+                'label' => $args['label'],
+                'placeholder' => $args['placeholder'],
             ]);
         endif;
 
