@@ -67,9 +67,9 @@ class configurationPage{
         extract($args);  
         $section_id = $this->recent_section;
         //callable
-        if(!empty($section_id)):
-            $add_field = 'add_' . $args['type'];
-            $this->sections[$section_id]->$add_field([
+        $add_field = 'add_'.$args['type'];
+        if(!empty($section_id) && is_callable($add_field, true, $method_type)):
+            $this->sections[$section_id]->$method_type([
                 'name'  => $this->set_field_name($section_id, $name),
                 'id'    => $name,
                 'label' => $args['label'],
