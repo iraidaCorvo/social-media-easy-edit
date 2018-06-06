@@ -6,7 +6,6 @@
 * Author: Iraida Artiles Corvo
 * License: GPL2
 **/
-
 define( 'SMEE_PATH', plugin_dir_path(__FILE__));
 define( 'SMEE_PARTIALS_PATH', SMEE_PATH . 'partials/');
 define( 'SMEE_INPUTS_PATH', SMEE_PARTIALS_PATH . 'inputs/');
@@ -16,9 +15,10 @@ define( 'SMEE_PLUGIN_SHORT_NAME' , 'smee');
 define( 'SMEE_PLUGIN_DOMAIN'     , 'smee');
 include_once 'section.php';
 include_once 'configurationPage.php';
+include_once 'smee_menu.php';
 
 
-$configpage = new configurationPage(
+/*$configpage = new configurationPage(
     'Social Media Easy Edit',
     'SM Easy Edit',
     'manage_options',
@@ -29,7 +29,7 @@ $configpage = new configurationPage(
 
 $configpage
 
-    ->add_section([
+->add_section([
         'id'    => 'test_section',
         'title' => 'test title'
     ])
@@ -68,16 +68,36 @@ $configpage
         'name' => 'testing2'
     ])
     ;
-    //string $page_title, string $menu_title, string $capability, string $menu_slug
-
-/*$configpage->add_page(
-    'Social Media Easy Edit1',
-    'SM Easy Edit1',
-    'manage_options',
-    'SocialMedia1'
-);*/
-
-
+*/
+    $smee_menu = new smee_menu_page();
+    $smee_menu
+    ->add_page(
+        'Social Media Easy Edit',
+        'SM Easy Edit',
+        'manage_options',
+        'social_media'
+    )
+    ->add_section([
+        'id'    => 'test_section',
+        'title' => 'test title'
+    ])
+    
+    ->add_field([
+        'type' => 'password',
+        'name' => 'testing'
+    ])
+    ->add_page(
+        'Social Media Easy Edit1',
+        'SM Easy Edit1',
+        'manage_options',
+        'social_media2'
+    )
+    ->add_field([
+        'type' => 'text',
+        'name' => 'testing2'
+    ])
+    
+    ;
     function generate_form($form, $with_submit=true){
          
         $miForm = new section($with_submit);
