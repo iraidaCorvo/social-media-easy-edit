@@ -65,16 +65,19 @@ class configurationPage{
     }
     public function add_field( array $args ){
         extract($args);  
-        $section_id = $this->recent_section;
-        //callable
+        $recent_section = $this->recent_section;
         $add_field = 'add_'.$args['type'];
-        if(!empty($section_id) && is_callable($add_field, true, $method_type)):
-            $this->sections[$section_id]->$method_type([
-                'name'  => $this->set_field_name($section_id, $name),
+        if(!empty($recent_section) && method_exists($this->sections[$recent_section],$add_field) ):
+            $label = ( isset( $args['label'] ) ) ? $args['label'] : null; 
+            $placeholder = ( isset( $args['placeholder'] ) ) ? $args['placeholder'] : null; 
+            $this->sections[$recent_section]->$add_field([
+                'name'  => $this->set_field_name($recent_section, $name),
                 'id'    => $name,
-                'label' => $args['label'],
-                'placeholder' => $args['placeholder'],
+                'label' => $label,
+                'placeholder' => $placeholder,
             ]);
+        else:
+            die('method not valid');
         endif;
 
         return $this;
@@ -93,6 +96,7 @@ class configurationPage{
                 $this->Page_Slug
             );
             foreach($section->Fields as $field_id => $field):
+                // showArray($page_settings,'$page_settings');
                 $field ->Value = $page_settings[$section_id][$field_id];
                 add_settings_field(
                     $field->ID,
