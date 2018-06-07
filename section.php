@@ -18,6 +18,7 @@ class section extends field {
     private $submit_enable;
     private $title = '';
     private $page  = '';
+
     function __construct(array $args=[] , bool $submit_enable = true){
         parent::__construct('', $args);
         $this->title = isset($args['title'])? $args['title'] : '';  
@@ -121,36 +122,7 @@ class section extends field {
             $this->fields[$field]->Value = $values[$field];
         endforeach;  
     }
-
-    public function createGroup(){
-        $this->group[]=[
-            'class' => '',
-            'type'  => '',
-            'fields' => [
-                ''
-            ]
-        ];
-    }
-
-    public function check_form(){
-        $this->hasErrors = false;
-        foreach($this->fields as $id => $field):
-            $error = $field->validate();
-            if($error !== false){
-                $this->errors[$id] = $error;
-                $this->hasErrors = true;
-                /*
-                    error = [
-                        'type'    => 'notEmpty',
-                        'message' => 'Es obligatorio'
-                    ]
-                */
-            }
-        endforeach;
-        return $this->hasErrors;
-    }
-
-
+    
     public function render(){
         $title  = $this->title;
         $method = $this->method;
