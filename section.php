@@ -80,14 +80,7 @@ class section extends field {
         }
         if( ! $args['id'] ) $args['id'] = $args['name'];
         $password = new input_password($args['name'], $args);
-        return $this->add_field($password);
-        
-        /*$this->add_field_din('input_password',[
-            'id'    => $passwordId,
-            'name'  => $passwordName,
-            'value' => ( isset($_POST[$passwordName]) ) ? $_POST[$passwordName] : ''
-        ]);*/
-        
+        return $this->add_field($password);        
     }
     public function add_select( array $args){
 
