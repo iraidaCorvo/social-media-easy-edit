@@ -145,30 +145,7 @@ class configurationPage{
     private function set_field_name(string $section_name, string $field_name){
         return $this->Option_Name . "[$section_name][$field_name]";
     }
-    function crear_campos( $args ) {
-        // get the value of the setting we've registered with register_setting()
-        $options = get_option( $this->Option_Name );
-        // output the field
-        ?>
-        <select id="<?php echo esc_attr( $args['label_for'] ); ?>"
-        data-custom="<?php echo esc_attr( $args['wporg_custom_data'] ); ?>"
-        name="<?php echo $this->prefix . $this->menu_slug ?>[<?php echo esc_attr( $args['label_for'] ); ?>]"
-        >
-        <option value="red" <?php echo isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'red', false ) ) : ( '' ); ?>>
-        <?php esc_html_e( 'red pill', 'wporg' ); ?>
-        </option>
-        <option value="blue" <?php echo isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'blue', false ) ) : ( '' ); ?>>
-        <?php esc_html_e( 'blue pill', 'wporg' ); ?>
-        </option>
-        </select>
-        <p class="description">
-        <?php esc_html_e( 'You take the blue pill and the story ends. You wake in your bed and you believe whatever you want to believe.', 'wporg' ); ?>
-        </p>
-        <p class="description">
-        <?php esc_html_e( 'You take the red pill and you stay in Wonderland and I show you how deep the rabbit-hole goes.', 'wporg' ); ?>
-        </p>
-        <?php
-    }
+
     function wporg_options_page_html() {
         // check user capabilities
         if ( ! current_user_can( 'manage_options' ) ) {
@@ -206,16 +183,6 @@ class configurationPage{
     
        public function render(){
         
-    }
-    public function borgis_builder(){
-        
-    }
-    
-
-    function crea_secciones( $args ) {
-    ?>
-        <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Follow the white rabbit.', $this->Domain ); ?></p>
-    <?php
     }
      
 }
