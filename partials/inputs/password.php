@@ -8,9 +8,9 @@ class input_password extends input{
     }
     function __set($name, $value){
         switch( $name ):
-            case 'Value':
-                parent::__set($name,'');
-            break;
+            // case 'Value':
+            //     parent::__set($name,'');
+            // break;
             default: 
                parent::__set($name,$value);
          endswitch;
