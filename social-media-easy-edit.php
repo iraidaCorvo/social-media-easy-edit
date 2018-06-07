@@ -15,17 +15,18 @@ define( 'SMEE_PLUGIN_SHORT_NAME' , 'smee');
 define( 'SMEE_PLUGIN_DOMAIN'     , 'smee');
 
 
+include_once 'admin-page-setup.php';
 include_once 'section.php';
 include_once 'configurationPage.php';
 include_once 'smee_menu.php';
-include_once 'admin-page-setup.php';
 
 
 $smee_menu = new smee_menu_page();
 
-    $smee_menu->borjis_builder($config_page_data);
+$smee_menu->borjis_builder($config_page_data);
+
     function generate_form($form, $with_submit=true){
-         
+       
         $miForm = new section($with_submit);
         $miForm->generate_form($form);
         $miForm->set_values($_POST);
