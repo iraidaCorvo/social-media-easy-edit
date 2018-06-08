@@ -105,9 +105,9 @@ class field{
     }
     function render(){
         return [
-            'attrs' => $this->serialize_attrs(),
+            'serialize_attrs' => $this->serialize_attrs(),
             'label' => $this->label,
-            'attrsValues'=> $this->props
+            'value'=> $this->props['value']
         ];
         
 
