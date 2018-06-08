@@ -4,6 +4,7 @@ class select extends field{
 
     //array con opciones
     function __construct($name = 'name', $args=[]){
+        //showArray($args);
         if(!empty($args['options']) and is_array($args['options'])): 
             $this->options = $args['options'];
         endif;
@@ -21,8 +22,10 @@ class select extends field{
     function render(){  
         
         $attrs = parent::render();
+        
         $attrs['options']=$this->options;
-        $selected = $attrs['attrsValues']['value'];
+        //showArray($attrs);
+        $selected = $attrs['value'];
         //showArray($attrs);
         extract($attrs);
         include SMEE_VIEWS . $this->view . '.php';
