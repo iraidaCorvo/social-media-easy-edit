@@ -1,0 +1,1 @@
+<textarea <?php echo $serialize_attrs ?>><?php echo $value;?></textarea>
