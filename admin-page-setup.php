@@ -57,6 +57,23 @@ $config_page_data = [
                         'label' =>'Page ID',
                         'placeholder' => 'page id'
                     ],
+                    'text-areafb1' => [
+                        'type' => 'textarea',
+                        'name' => 'text-areafb1',
+                        'label' =>'Text Area',
+                        'placeholder' => 'Text Area'
+                    ],
+                    'select-fb' => [
+                        'type' => 'select',
+                        'name' => 'select-fb',
+                        'label' =>'Select Area',
+                        'placeholder' => 'Select',
+                        'options' =>[
+                            '0'=> 'rojo',
+                            '1'=> 'azul',
+                            '2'=> 'verde',
+                        ]
+                    ],
                 ]
             ]
         ]
