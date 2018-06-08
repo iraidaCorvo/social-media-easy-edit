@@ -67,15 +67,13 @@ class configurationPage{
         extract($args);  
         $recent_section = $this->recent_section;
         $add_field = 'add_'.$args['type'];
+        //showArray($args);
         if(!empty($recent_section) && method_exists($this->sections[$recent_section],$add_field) ):
-            $label = ( isset( $args['label'] ) ) ? $args['label'] : null; 
-            $placeholder = ( isset( $args['placeholder'] ) ) ? $args['placeholder'] : null; 
-            $this->sections[$recent_section]->$add_field([
-                'name'  => $this->set_field_name($recent_section, $name),
-                'id'    => $name,
-                'label' => $label,
-                'placeholder' => $placeholder,
-            ]);
+            $args['label'] = ( isset( $args['label'] ) ) ? $args['label'] : null; 
+            $args['placeholder'] = ( isset( $args['placeholder'] ) ) ? $args['placeholder'] : null; 
+            $args['name'] = $this->set_field_name($recent_section, $name);
+            $args['id'] = $name;
+            $this->sections[$recent_section]->$add_field($args);
         else:
             die('method not valid');
         endif;
