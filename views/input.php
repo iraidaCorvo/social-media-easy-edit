@@ -1,4 +1,1 @@
-
-<input <?php echo $attrs ?> >
-
-
+<input <?php echo $serialize_attrs ?> >
