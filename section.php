@@ -6,6 +6,7 @@ require_once SMEE_INPUTS_PATH . 'password.php';
 require_once SMEE_INPUTS_PATH . 'submit.php';
 require_once SMEE_INPUTS_PATH . 'text.php';
 require_once SMEE_SELECT_PATH . 'select.php';
+require_once SMEE_TEXTAREA_PATH . 'textarea.php';
 
 class section extends field {
     private $fields = [];
@@ -88,6 +89,7 @@ class section extends field {
         if(!$args['name']) {
             return false;
         }
+        //showArray($args);
         $input = new select($args['name'], $args);
         return $this->add_field($input);
    
@@ -97,6 +99,14 @@ class section extends field {
         $input = new input_submit($args);
          return $this->add_field($input);
 
+    }
+    public function add_textarea( array $args ){
+        if(!$args['name']) {
+            return false;
+        }
+        if( ! $args['id'] ) $args['id'] = $args['name'];
+        $textarea = new textarea($args['name'], $args);
+        return $this->add_field($textarea);        
     }
     public function add_text( array $args ){
         if(!$args['name']) {
