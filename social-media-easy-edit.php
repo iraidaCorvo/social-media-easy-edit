@@ -6,6 +6,8 @@
 * Author: Iraida Artiles Corvo
 * License: GPL2
 **/
+//use Facebook;
+
 define( 'SMEE_PATH', plugin_dir_path(__FILE__));
 define( 'SMEE_PARTIALS_PATH', SMEE_PATH . 'partials/');
 define( 'SMEE_INPUTS_PATH', SMEE_PARTIALS_PATH . 'inputs/');
@@ -14,13 +16,17 @@ define( 'SMEE_SELECT_PATH', SMEE_PARTIALS_PATH . 'select/');
 define( 'SMEE_TEXTAREA_PATH', SMEE_PARTIALS_PATH . 'textarea/');
 define( 'SMEE_PLUGIN_SHORT_NAME' , 'smee');
 define( 'SMEE_PLUGIN_DOMAIN'     , 'smee');
+define( 'SMEE_APIS', SMEE_PATH .'apis/');
+
 
 
 include_once 'admin-page-setup.php';
 include_once 'section.php';
 include_once 'configurationPage.php';
 include_once 'smee_menu.php';
-
+include_once 'smee_menu.php';
+require_once SMEE_APIS . 'facebook.php';
+require_once SMEE_APIS . 'twitter.php';
 
 $smee_menu = new smee_menu_page();
 
@@ -37,6 +43,3 @@ $smee_menu->borjis_builder($config_page_data);
     }
 
 
-function testing_fb_api(){
-    showArray(get_option('smee_facebook_config_page')['facebook_section']);
-}
