@@ -24,10 +24,9 @@ include_once 'admin-page-setup.php';
 include_once 'section.php';
 include_once 'configurationPage.php';
 include_once 'smee_menu.php';
-include_once 'smee_menu.php';
-require_once SMEE_APIS . 'facebook.php';
+//require_once SMEE_APIS . 'facebook.php';
 require_once SMEE_APIS . 'twitter.php';
-
+global $smee_menu;
 $smee_menu = new smee_menu_page();
 
 $smee_menu->borjis_builder($config_page_data);
@@ -40,6 +39,12 @@ $smee_menu->borjis_builder($config_page_data);
         $miForm->render();
         $miForm->Method='GET';
 
+    }
+
+    function test(){
+        require_once SMEE_APIS . 'social-base.php';
+        require_once SMEE_APIS . 'social-twitter.php';
+        $twitter=new smee_twitter();
     }
 
 
