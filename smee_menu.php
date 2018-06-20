@@ -3,7 +3,18 @@ class smee_menu_page{
     private $parent_slug = null;
     private $pages = [];
     private $current_page_slug = null; //Apunta a la página usada recientemente
-
+    
+    function __get($name){
+        switch( $name ):
+            case 'Pages':
+                return $this->pages;
+            default:
+        endswitch;
+    }
+    public function get_config(string $page = null){
+        // Si null return empty 
+        return $this->pages[$page . '_config_page']->get_config();
+    }
     public function add_page(  ){
         $args = func_get_args();
         $func_num_args = func_num_args();
