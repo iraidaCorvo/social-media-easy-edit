@@ -143,7 +143,13 @@ class configurationPage{
     private function set_field_name(string $section_name, string $field_name){
         return $this->Option_Name . "[$section_name][$field_name]";
     }
-
+    public function get_config(){
+        if(get_option($this->Option_Name)== null){
+            return '';
+        }else{
+            return get_option($this->Option_Name);
+        }
+    }
     function wporg_options_page_html() {
         // check user capabilities
         if ( ! current_user_can( 'manage_options' ) ) {
